@@ -8,30 +8,22 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Клонирование и деплой
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          
+      - name: Создание версионной папки
         run: |
-          # Клонируем репозиторий ИЗ ВЕТКИ gh-pages
-          git clone -b gh-pages https://github.com/Nootropica/LR4_RPP.git
-          cd LR4_RPP
-          
-          # ОТЛАДКА: смотрим что в репозитории
-          echo "=== Текущая папка ==="
-          pwd
-          echo "=== Содержимое ==="
-          ls -la
-          echo "=== Все файлы рекурсивно ==="
-          find . -type f -name "*.html" | head -20
-          echo "=== Конец отладки ==="
-          
-          # Создаем версионную папку
-          VERSION="${GITHUB_REF#refs/tags/}"
+          VERSION="${GITHUB_REF#refs/tags/v}"
           mkdir -p release/v$VERSION
           cp -r ru en index.html release/v$VERSION/
           
-          # Публикуем
-          git config --global user.name "Автоматический CI/CD"
-          git config --global user.email "mogucci2000@list.ru"
+      - name: Публикация
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
           cp -r release/* .
           git add .
           git commit -m "Deploy v$VERSION"
-          git push origin gh-pages
+          git push
