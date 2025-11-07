@@ -10,9 +10,18 @@ jobs:
     steps:
       - name: Клонирование и деплой
         run: |
-          # Клонируем репозиторий
+          # Клонируем репозиторий ИЗ ВЕТКИ gh-pages
           git clone -b gh-pages https://github.com/Nootropica/LR4_RPP.git
           cd LR4_RPP
+          
+          # ОТЛАДКА: смотрим что в репозитории
+          echo "=== Текущая папка ==="
+          pwd
+          echo "=== Содержимое ==="
+          ls -la
+          echo "=== Все файлы рекурсивно ==="
+          find . -type f -name "*.html" | head -20
+          echo "=== Конец отладки ==="
           
           # Создаем версионную папку
           VERSION="${GITHUB_REF#refs/tags/}"
@@ -22,7 +31,6 @@ jobs:
           # Публикуем
           git config --global user.name "Автоматический CI/CD"
           git config --global user.email "mogucci2000@list.ru"
-          git checkout gh-pages
           cp -r release/* .
           git add .
           git commit -m "Deploy v$VERSION"
