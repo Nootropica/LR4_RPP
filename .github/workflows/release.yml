@@ -16,7 +16,8 @@ jobs:
       - name: Создание версионной папки
         run: |
           VERSION="${{ github.ref_name }}"
-          mkdir -p v$VERSION
+          VERSION="${VERSION#v}"  # Убираем 'v' если он есть в начале
+          mkdir -p $VERSION
           cp -r ru en index.html $VERSION/
           
       - name: Публикация
