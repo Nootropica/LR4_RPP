@@ -1,1 +1,31 @@
+name: Deploy Release
 
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Клонирование репозитория
+        run: |
+          git clone https://github.com/Nootropica/LR4_RPP.git
+      
+      - name: Создание временной папки 
+        run: |
+          cd LR4_RPP
+          VERSION="${GITHUB_REF#refs/tags/}"
+          mkdir -p release/v$VERSION
+          cp -r ru en index.html release/v$VERSION/
+          
+      - name: Публикация
+        run: |
+          cd LR4_RPP
+          git config --global user.name "Автоматический CI/CD"
+          git config --global user.email "mogucci2000@list.ru"
+          git checkout gh-pages
+          cp -r release/* .
+          git add .
+          git commit -m "Deploy v$VERSION"
+          git push origin gh-pages
