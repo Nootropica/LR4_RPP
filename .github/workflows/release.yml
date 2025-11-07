@@ -8,21 +8,18 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Клонирование репозитория
+      - name: Клонирование и деплой
         run: |
+          # Клонируем репозиторий
           git clone https://github.com/Nootropica/LR4_RPP.git
           cd LR4_RPP
           
-      - name: Создание временной папки 
-        run: |
-          cd LR4_RPP
+          # Создаем версионную папку
           VERSION="${GITHUB_REF#refs/tags/}"
           mkdir -p release/v$VERSION
           cp -r ru en index.html release/v$VERSION/
           
-      - name: Публикация
-        run: |
-          cd LR4_RPP
+          # Публикуем
           git config --global user.name "Автоматический CI/CD"
           git config --global user.email "mogucci2000@list.ru"
           git checkout gh-pages
