@@ -17,8 +17,8 @@ jobs:
         run: |
           VERSION="${{ github.ref_name }}"
           VERSION="${VERSION#v}"  # Убираем 'v' если он есть в начале
-          mkdir -p $VERSION
-          cp -r ru en index.html $VERSION/
+          mkdir -p v$VERSION
+          cp -r ru en index.html v$VERSION/
           
       - name: Публикация
         run: |
