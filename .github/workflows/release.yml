@@ -16,8 +16,8 @@ jobs:
       - name: Создание версионной папки
         run: |
           VERSION="${GITHUB_REF#refs/tags/v}"
-          mkdir -p release/v$VERSION
-          cp -r ru en index.html release/v$VERSION/
+          mkdir -p v$VERSION
+          cp -r ru en index.html v$VERSION/
           
       - name: Публикация
         run: |
