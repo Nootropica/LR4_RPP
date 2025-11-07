@@ -11,7 +11,8 @@ jobs:
       - name: Клонирование репозитория
         run: |
           git clone https://github.com/Nootropica/LR4_RPP.git
-      
+          cd LR4_RPP
+          
       - name: Создание временной папки 
         run: |
           cd LR4_RPP
