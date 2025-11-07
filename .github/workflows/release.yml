@@ -11,7 +11,7 @@ jobs:
       - name: Клонирование и деплой
         run: |
           # Клонируем репозиторий
-          git clone https://github.com/Nootropica/LR4_RPP.git
+          git clone -b gh-pages https://github.com/Nootropica/LR4_RPP.git
           cd LR4_RPP
           
           # Создаем версионную папку
